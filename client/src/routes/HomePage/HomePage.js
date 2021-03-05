@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Helmet from "react-helmet";
 import LoadingPage from "../../components/LoadingPage";
+import { BOOK_API_URL } from "../../config";
 
 const Container = styled.div`
     padding: 20px;
@@ -33,19 +34,19 @@ function HomePage() {
                     data: {
                         response: { item: bestSeller },
                     },
-                } = await axios.get("http://localhost:4000/api/books/bestSeller");
+                } = await axios.get(`${BOOK_API_URL}/bestseller`);
 
                 const {
                     data: {
                         response: { item: recommend },
                     },
-                } = await axios.get("http://localhost:4000/api/books/recommend");
+                } = await axios.get(`${BOOK_API_URL}/recommend`);
 
                 const {
                     data: {
                         response: { item: newBook },
                     },
-                } = await axios.get("http://localhost:4000/api/books/newBook");
+                } = await axios.get(`${BOOK_API_URL}/newbook`);
                 setBestSellers(bestSeller);
                 setRecommends(recommend);
                 setNewBooks(newBook);
@@ -60,7 +61,7 @@ function HomePage() {
     return (
         <>
             <Helmet>
-                <title>OhBooks</title>
+                <title>Oh! Books</title>
             </Helmet>
             {Loading ? (
                 <LoadingPage />
@@ -76,20 +77,20 @@ function HomePage() {
                             ))}
                         </Section>
                     )}
-                    {Recommends && Recommends.length > 0 && (
+                    {NewBooks && NewBooks.length > 0 && (
                         <Section>
-                            <Title>추천 도서</Title>
-                            {Recommends.map((book) => (
+                            <Title>신간 도서</Title>
+                            {NewBooks.map((book) => (
                                 <React.Fragment key={book.itemId}>
                                     <div style={{ marginRight: "10px" }}>{book.title}</div>
                                 </React.Fragment>
                             ))}
                         </Section>
                     )}
-                    {NewBooks && NewBooks.length > 0 && (
+                    {Recommends && Recommends.length > 0 && (
                         <Section>
-                            <Title>신간 도서</Title>
-                            {NewBooks.map((book) => (
+                            <Title>추천 도서</Title>
+                            {Recommends.map((book) => (
                                 <React.Fragment key={book.itemId}>
                                     <div style={{ marginRight: "10px" }}>{book.title}</div>
                                 </React.Fragment>

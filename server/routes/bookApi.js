@@ -3,10 +3,24 @@ import axios from "axios";
 
 const bookApiRouter = express.Router();
 
-bookApiRouter.get("/bestSeller", async (req, res) => {
+bookApiRouter.get("/bestseller", async (req, res) => {
     try {
         const response = await axios.get(
-            `http://book.interpark.com/api/bestSeller.api?key=${process.env.API_KEY}&categoryId=100&output=json`
+            `${process.env.API_URL}/bestSeller.api?key=${process.env.API_KEY}&categoryId=100&output=json`
+        );
+        return res.status(200).json({
+            success: true,
+            response: response.data,
+        });
+    } catch (error) {
+        return res.json({ success: false, error });
+    }
+});
+
+bookApiRouter.get("/newbook", async (req, res) => {
+    try {
+        const response = await axios.get(
+            `${process.env.API_URL}/newBook.api?key=${process.env.API_KEY}&categoryId=100&output=json`
         );
         return res.status(200).json({
             success: true,
@@ -20,21 +34,7 @@ bookApiRouter.get("/bestSeller", async (req, res) => {
 bookApiRouter.get("/recommend", async (req, res) => {
     try {
         const response = await axios.get(
-            `http://book.interpark.com/api/recommend.api?key=${process.env.API_KEY}&categoryId=100&output=json`
-        );
-        return res.status(200).json({
-            success: true,
-            response: response.data,
-        });
-    } catch (error) {
-        return res.json({ success: false, error });
-    }
-});
-
-bookApiRouter.get("/newBook", async (req, res) => {
-    try {
-        const response = await axios.get(
-            `http://book.interpark.com/api/newBook.api?key=${process.env.API_KEY}&categoryId=100&output=json`
+            `${process.env.API_URL}/recommend.api?key=${process.env.API_KEY}&categoryId=100&output=json`
         );
         return res.status(200).json({
             success: true,
