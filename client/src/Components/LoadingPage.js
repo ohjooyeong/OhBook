@@ -3,11 +3,11 @@ import styled from "styled-components";
 
 const Container = styled.div`
     height: 100vh;
-    width: 100vw;
+    width: 100%;
     display: flex;
     justify-content: center;
-    font-size: 30px;
-    margin-top: 30px;
+    font-size: 40px;
+    margin-top: 50px;
 `;
 
 export default () => (

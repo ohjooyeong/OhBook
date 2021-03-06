@@ -14,8 +14,8 @@ const SHeader = styled.header`
     align-items: center;
     background-color: white;
     z-index: 10;
+    opacity: 0.9;
     box-shadow: 0px 1px 5px 2px rgba(0, 0, 0, 0.7);
-    border-radius: 5px;
 `;
 
 const Wrraper = styled.div`
@@ -37,6 +37,16 @@ const Item = styled.li`
     width: 80px;
     height: 50px;
     text-align: center;
+    font-size: 16px;
+    margin-left: 10px;
+    &:hover {
+        color: white;
+        background-color: #fab231;
+        border-radius: 25%;
+        transition-property: background-color, color;
+        transition-duration: 0.3s;
+        transition-timing-function: ease-out;
+    }
 `;
 
 const Form = styled.form`
@@ -48,8 +58,9 @@ const Input = styled.input`
     width: 100%;
     border-radius: 5px;
     font-size: 14px;
-    color: $black;
+    color: black;
     font-weight: 600;
+    text-align: center;
     &::placeholder {
         font-weight: 300;
         color: rgba(0, 0, 0, 0.7);
@@ -65,28 +76,36 @@ const SLink = styled(Link)`
 
 const LogoLink = styled(Link)``;
 
-function Header({ location: { pathname } }) {
+const MyLogo = styled.img`
+    height: 50px;
+`;
+
+MyLogo.defaultProps = {
+    src: logoImage,
+};
+
+function Header() {
     return (
         <SHeader>
             <Wrraper>
                 <List>
-                    <Item current={pathname === "/"}>
-                        <LogoLink>
-                            <img src={logoImage} style={{ height: "50px" }} />
+                    <Item>
+                        <LogoLink to="/">
+                            <MyLogo />
                         </LogoLink>
                     </Item>
                 </List>
                 <List style={{ justifySelf: "center" }}>
                     <Form>
-                        <Input />
+                        <Input placeholder="검색" />
                     </Form>
                 </List>
                 <List style={{ justifySelf: "end" }}>
-                    <Item current={pathname === "/login"}>
-                        <SLink>로그인</SLink>
+                    <Item>
+                        <SLink to="/login">로그인</SLink>
                     </Item>
-                    <Item current={pathname === "/search"}>
-                        <SLink>회원가입</SLink>
+                    <Item>
+                        <SLink to="/register">회원가입</SLink>
                     </Item>
                 </List>
             </Wrraper>
@@ -94,4 +113,4 @@ function Header({ location: { pathname } }) {
     );
 }
 
-export default Header;
+export default withRouter(Header);

@@ -4,20 +4,12 @@ import styled from "styled-components";
 import Helmet from "react-helmet";
 import LoadingPage from "../../components/LoadingPage";
 import { BOOK_API_URL } from "../../config";
+import SwiperSection from "../../components/SwiperSection";
+import { SwiperSlide } from "swiper/react";
+import CoverImage from "../../components/CoverImage";
 
 const Container = styled.div`
     padding: 20px;
-`;
-
-const Section = styled.div`
-    :not(:last-child) {
-        margin-bottom: 50px;
-    }
-`;
-
-const Title = styled.span`
-    font-size: 16px;
-    font-weight: 600;
 `;
 
 function HomePage() {
@@ -68,34 +60,48 @@ function HomePage() {
             ) : (
                 <Container>
                     {BestSellers && BestSellers.length > 0 && (
-                        <Section>
-                            <Title>베스트 셀러</Title>
+                        <SwiperSection title="베스트 셀러">
                             {BestSellers.map((book) => (
-                                <React.Fragment key={book.itemId}>
-                                    <div style={{ marginRight: "10px" }}>{book.title}</div>
-                                </React.Fragment>
+                                <SwiperSlide key={book.itemId}>
+                                    <CoverImage
+                                        imageUrl={book.coverLargeUrl}
+                                        title={book.title}
+                                        rating={book.customerReviewRank}
+                                        author={book.author}
+                                    />
+                                </SwiperSlide>
                             ))}
-                        </Section>
+                        </SwiperSection>
                     )}
+
                     {NewBooks && NewBooks.length > 0 && (
-                        <Section>
-                            <Title>신간 도서</Title>
+                        <SwiperSection title="신작 도서">
                             {NewBooks.map((book) => (
-                                <React.Fragment key={book.itemId}>
-                                    <div style={{ marginRight: "10px" }}>{book.title}</div>
-                                </React.Fragment>
+                                <SwiperSlide key={book.itemId}>
+                                    <CoverImage
+                                        imageUrl={book.coverLargeUrl}
+                                        title={book.title}
+                                        rating={book.customerReviewRank}
+                                        author={book.author}
+                                    />
+                                </SwiperSlide>
                             ))}
-                        </Section>
+                        </SwiperSection>
                     )}
                     {Recommends && Recommends.length > 0 && (
-                        <Section>
-                            <Title>추천 도서</Title>
+                        <SwiperSection title="추천 도서">
                             {Recommends.map((book) => (
-                                <React.Fragment key={book.itemId}>
-                                    <div style={{ marginRight: "10px" }}>{book.title}</div>
-                                </React.Fragment>
+                                <SwiperSlide key={book.itemId}>
+                                    <CoverImage
+                                        key={book.itemId}
+                                        imageUrl={book.coverLargeUrl}
+                                        title={book.title}
+                                        rating={book.customerReviewRank}
+                                        author={book.author}
+                                    />
+                                </SwiperSlide>
                             ))}
-                        </Section>
+                        </SwiperSection>
                     )}
                 </Container>
             )}
