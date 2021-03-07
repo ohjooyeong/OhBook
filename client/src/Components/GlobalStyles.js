@@ -11,9 +11,8 @@ const GlobalStyles = createGlobalStyle`
 		box-sizing: border-box;
 	}
 	body {
-		font-family: --apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+		font-family: 'NotoSans Light','Malgun Gothic','맑은 고딕','Apple SD Gothic Neo','돋움',dotum, sans-serif;
 		font-size: 14px;
-		/* background-color: rgb(198, 193, 190); */
 		color: black;
 		padding-top: 60px;
 		width: 100%;

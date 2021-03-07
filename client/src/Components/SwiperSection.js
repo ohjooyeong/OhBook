@@ -10,19 +10,22 @@ import "swiper/swiper.min.css";
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
 const Container = styled.div`
-    margin-bottom: 50px;
+    margin-bottom: 25px;
+    padding-bottom: 25px;
+    border-bottom: 3px double rgb(252, 178, 52, 0.4);
 `;
 
 const Header = styled.div`
     display: flex;
     justify-content: space-between;
+    align-items: center;
 `;
 
 const Title = styled.span`
     font-size: 1.5rem;
     font-weight: 800;
     font-size: 30px;
-    color: #fcb234;
+    color: black;
     padding: 5px;
     border-radius: 5px;
     margin-bottom: 1rem;
@@ -34,16 +37,20 @@ const Setting = styled.div`
 
 const ArrowLeft = styled(AiFillCaretLeft)`
     color: #fcb234;
+    width: 2rem;
+    height: 2rem;
 `;
 
 const ArrowRight = styled(AiFillCaretRight)`
     color: #fcb234;
+    width: 2rem;
+    height: 2rem;
 `;
 
 const PreButton = styled.div`
     background-color: none;
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 2rem;
+    height: 2rem;
     padding: auto;
     display: flex;
     justify-content: center;
@@ -63,8 +70,8 @@ const PreButton = styled.div`
 
 const NextButton = styled.div`
     background-color: none;
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 2rem;
+    height: 2rem;
     padding: auto;
     display: flex;
     justify-content: center;

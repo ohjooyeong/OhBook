@@ -6,7 +6,7 @@ import RegsiterPage from "../routes/RegisterPage/RegisterPage";
 import DetailPage from "../routes/DetailPage/DetailPage";
 import SearchPage from "../routes/SearchPage/SearchPage";
 import Header from "./Header";
-import styled from "styled-components";
+import CategoryPage from "../routes/CategoryPage/CategoryPage";
 
 export default () => (
     <BrowserRouter>
@@ -18,6 +18,7 @@ export default () => (
                 <Route path="/register" exact component={RegsiterPage} />
                 {/* <Route path="/search" exact component={SearchPage} />
                 <Route path="/book/:bookId" exact component={DetailPage} /> */}
+                <Route path="/book/category/:categoryId" exact component={CategoryPage} />
             </Switch>
         </>
     </BrowserRouter>

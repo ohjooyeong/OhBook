@@ -32,6 +32,7 @@ const Title = styled.span`
     white-space: nowrap;
     text-overflow: ellipsis;
     margin-top: 1rem;
+    padding: 12px;
 `;
 
 const CoverImage = ({ imageUrl, title, rating }) => (
