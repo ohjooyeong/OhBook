@@ -99,7 +99,7 @@ const DropDown = styled.div`
             background-color: #fab231;
             border-radius: 15px 15px 0 0;
             transition-property: background-color, color;
-            transition-duration: 0.3s;
+            transition-duration: 0.1s;
             transition-timing-function: ease-out;
         }
     }
@@ -153,10 +153,10 @@ function Header() {
                     <DropDown>
                         <DropDownBtn>카테고리</DropDownBtn>
                         <DropDownContent>
-                            <DLink>경제/경영</DLink>
-                            <DLink>컴퓨터</DLink>
-                            <DLink>건강/뷰티</DLink>
-                            <DLink>자기계발</DLink>
+                            <DLink to="/book/category/117">경제/경영</DLink>
+                            <DLink to="/book/category/122">컴퓨터</DLink>
+                            <DLink to="/book/category/126">건강/뷰티</DLink>
+                            <DLink to="/book/category/118">자기계발</DLink>
                         </DropDownContent>
                     </DropDown>
                 </List>

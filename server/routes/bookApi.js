@@ -45,4 +45,22 @@ bookApiRouter.get("/recommend", async (req, res) => {
     }
 });
 
+bookApiRouter.post("/category", async (req, res) => {
+    const {
+        body: { categoryId },
+    } = req;
+    let category = Number(categoryId);
+    try {
+        const response = await axios.get(
+            `${process.env.API_URL}/newBook.api?key=${process.env.API_KEY}&categoryId=${category}&output=json`
+        );
+        return res.status(200).json({
+            success: true,
+            response: response.data,
+        });
+    } catch (error) {
+        return res.json({ success: false, error });
+    }
+});
+
 export default bookApiRouter;
