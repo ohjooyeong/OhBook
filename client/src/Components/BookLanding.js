@@ -67,7 +67,7 @@ const Description = styled.p`
 const BookLanding = ({ isbn, title, author, description, coverImage }) => {
     return (
         <Container>
-            <BLink>
+            <BLink to={`/book/${isbn}`}>
                 <BImage src={coverImage} />
                 <div>
                     <Title>{title}</Title>

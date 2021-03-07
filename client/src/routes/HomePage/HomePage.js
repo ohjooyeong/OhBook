@@ -66,8 +66,8 @@ function HomePage() {
                                     <CoverImage
                                         imageUrl={book.coverLargeUrl}
                                         title={book.title}
-                                        rating={book.customerReviewRank}
                                         author={book.author}
+                                        isbn={book.isbn}
                                     />
                                 </SwiperSlide>
                             ))}
@@ -81,8 +81,8 @@ function HomePage() {
                                     <CoverImage
                                         imageUrl={book.coverLargeUrl}
                                         title={book.title}
-                                        rating={book.customerReviewRank}
                                         author={book.author}
+                                        isbn={book.isbn}
                                     />
                                 </SwiperSlide>
                             ))}
@@ -93,11 +93,10 @@ function HomePage() {
                             {Recommends.map((book) => (
                                 <SwiperSlide key={book.itemId}>
                                     <CoverImage
-                                        key={book.itemId}
                                         imageUrl={book.coverLargeUrl}
                                         title={book.title}
-                                        rating={book.customerReviewRank}
                                         author={book.author}
+                                        isbn={book.isbn}
                                     />
                                 </SwiperSlide>
                             ))}

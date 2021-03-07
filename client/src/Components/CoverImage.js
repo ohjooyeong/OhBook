@@ -1,10 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
     font-size: 12px;
     cursor: pointer;
 `;
+
+const BLink = styled(Link)``;
 
 const Image = styled.div`
     background-image: url(${(props) => props.coverUrl});
@@ -35,12 +38,14 @@ const Title = styled.span`
     padding: 12px;
 `;
 
-const CoverImage = ({ imageUrl, title, rating }) => (
+const CoverImage = ({ imageUrl, title, isbn }) => (
     <Container>
-        <ImageContainer>
-            <Image coverUrl={imageUrl} />
-        </ImageContainer>
-        <Title>{title}</Title>
+        <BLink to={`/book/${isbn}`}>
+            <ImageContainer>
+                <Image coverUrl={imageUrl} />
+            </ImageContainer>
+            <Title>{title}</Title>
+        </BLink>
     </Container>
 );
 

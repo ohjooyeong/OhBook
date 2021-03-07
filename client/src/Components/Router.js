@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import HomePage from "../routes/HomePage/HomePage";
 import LoginPage from "../routes/LoginPage/LoginPage";
 import RegsiterPage from "../routes/RegisterPage/RegisterPage";
@@ -19,8 +19,9 @@ export default () => (
                 <Route path="/register" exact component={RegsiterPage} />
                 <Route path="/search/:term" exact component={SearchPage} />
                 <Route path="/search" exact component={SearchPage} />
-                {/* <Route path="/book/:bookId" exact component={DetailPage} /> */}
                 <Route path="/book/category/:categoryId" exact component={CategoryPage} />
+                <Route path="/book/:bookId" exact component={DetailPage} />
+                <Redirect from="*" to="/" />
             </Switch>
         </>
     </BrowserRouter>
