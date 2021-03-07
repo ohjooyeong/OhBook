@@ -1,5 +1,6 @@
 import express from "express";
 import axios from "axios";
+import qs from "querystring";
 
 const bookApiRouter = express.Router();
 
@@ -53,6 +54,26 @@ bookApiRouter.post("/category", async (req, res) => {
     try {
         const response = await axios.get(
             `${process.env.API_URL}/newBook.api?key=${process.env.API_KEY}&categoryId=${category}&output=json`
+        );
+        return res.status(200).json({
+            success: true,
+            response: response.data,
+        });
+    } catch (error) {
+        return res.json({ success: false, error });
+    }
+});
+
+bookApiRouter.post("/search", async (req, res) => {
+    const {
+        body: {
+            params: { SearchTerm },
+        },
+    } = req;
+    let term = qs.escape(SearchTerm);
+    try {
+        const response = await axios.get(
+            `${process.env.API_URL}/search.api?key=${process.env.API_KEY}&query=${term}&categoryId=100&output=json`
         );
         return res.status(200).json({
             success: true,

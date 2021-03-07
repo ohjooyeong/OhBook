@@ -2,6 +2,7 @@ import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import styled from "styled-components";
 import logoImage from "../assets/logo.JPG";
+import SearchForm from "./SearchForm";
 
 const SHeader = styled.header`
     color: black;
@@ -140,7 +141,7 @@ MyLogo.defaultProps = {
     src: logoImage,
 };
 
-function Header() {
+function Header({ history }) {
     return (
         <SHeader>
             <Wrraper>
@@ -161,9 +162,7 @@ function Header() {
                     </DropDown>
                 </List>
                 <List style={{ justifySelf: "center" }}>
-                    <Form>
-                        <Input placeholder="검색" />
-                    </Form>
+                    <SearchForm history={history} />
                 </List>
                 <List style={{ justifySelf: "end" }}>
                     <Item>

@@ -23,6 +23,18 @@ const Section = styled.div`
     width: 80%;
 `;
 
+const Title = styled.div`
+    display: flex;
+    width: 1200px;
+    margin-top: 50px;
+    font-size: 1.5rem;
+    font-weight: 800;
+    font-size: 30px;
+    color: black;
+    padding: 5px;
+    border-radius: 5px;
+`;
+
 const CategoryPage = (props) => {
     const [CategoryBook, setCategoryBook] = useState([]);
     const [Error, setError] = useState(null);
@@ -54,31 +66,42 @@ const CategoryPage = (props) => {
             {Loading ? (
                 <LoadingPage />
             ) : (
-                <Container>
-                    <Helmet>
-                        <title>
-                            {CategoryBook[0].categoryName.slice(
+                <>
+                    <Title>
+                        카테고리 :{" "}
+                        {CategoryBook &&
+                            CategoryBook[0].categoryName.slice(
                                 5,
                                 CategoryBook[0].categoryName.length
-                            )}{" "}
-                            | 카테고리
-                        </title>
-                    </Helmet>
-                    {CategoryBook && CategoryBook.length > 0 && (
-                        <Section>
-                            {CategoryBook.map((book) => (
-                                <BookLanding
-                                    key={book.itemId}
-                                    title={book.title}
-                                    isbn={book.isbn}
-                                    author={book.author}
-                                    description={book.description}
-                                    coverImage={book.coverLargeUrl}
-                                />
-                            ))}
-                        </Section>
-                    )}
-                </Container>
+                            )}
+                    </Title>
+                    <Container>
+                        <Helmet>
+                            <title>
+                                {CategoryBook &&
+                                    CategoryBook[0].categoryName.slice(
+                                        5,
+                                        CategoryBook[0].categoryName.length
+                                    )}{" "}
+                                | 카테고리
+                            </title>
+                        </Helmet>
+                        {CategoryBook && CategoryBook.length > 0 && (
+                            <Section>
+                                {CategoryBook.map((book) => (
+                                    <BookLanding
+                                        key={book.itemId}
+                                        title={book.title}
+                                        isbn={book.isbn}
+                                        author={book.author}
+                                        description={book.description}
+                                        coverImage={book.coverLargeUrl}
+                                    />
+                                ))}
+                            </Section>
+                        )}
+                    </Container>
+                </>
             )}
         </>
     );
