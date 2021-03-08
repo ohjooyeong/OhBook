@@ -47,6 +47,9 @@ const Item = styled.li`
         transition-property: background-color, color;
         transition-duration: 0.1s;
         transition-timing-function: ease-out;
+        &:active {
+            background: rgb(247, 160, 9);
+        }
     }
 `;
 
@@ -78,6 +81,7 @@ const DLink = styled(Link)`
     display: block;
     &:hover {
         background-color: rgb(250, 188, 71, 0.7);
+
         color: white;
         &:last-child {
             border-radius: 0 0 15px 15px;
@@ -99,28 +103,11 @@ const DropDown = styled.div`
             color: white;
             background-color: #fab231;
             border-radius: 15px 15px 0 0;
+            box-shadow: 0px 1px 5px 2px rgba(0, 0, 0, 0.2);
             transition-property: background-color, color;
             transition-duration: 0.1s;
             transition-timing-function: ease-out;
         }
-    }
-`;
-
-const Form = styled.form`
-    width: 100%;
-`;
-
-const Input = styled.input`
-    padding: 7px 10px;
-    width: 100%;
-    border-radius: 5px;
-    font-size: 14px;
-    color: black;
-    font-weight: 600;
-    text-align: center;
-    &::placeholder {
-        font-weight: 300;
-        color: rgba(0, 0, 0, 0.7);
     }
 `;
 
@@ -166,10 +153,10 @@ function Header({ history }) {
                 </List>
                 <List style={{ justifySelf: "end" }}>
                     <Item>
-                        <SLink to="/login">로그인</SLink>
+                        <SLink to="/auth/login">로그인</SLink>
                     </Item>
                     <Item>
-                        <SLink to="/register">회원가입</SLink>
+                        <SLink to="/auth/register">회원가입</SLink>
                     </Item>
                 </List>
             </Wrraper>

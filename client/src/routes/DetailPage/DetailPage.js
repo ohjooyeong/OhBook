@@ -77,7 +77,6 @@ function DetailPage(props) {
                     },
                 } = await axios.post(`${BOOK_API_URL}/detail`, content);
                 setResult(...book);
-                console.log(...book);
             } catch (error) {
                 setError("책을 찾을 수 없습니다.");
             } finally {
@@ -85,7 +84,7 @@ function DetailPage(props) {
             }
         };
         getResult();
-    }, []);
+    }, [content]);
 
     return (
         <>

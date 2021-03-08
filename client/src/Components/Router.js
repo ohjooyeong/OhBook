@@ -15,8 +15,8 @@ export default () => (
             <Header />
             <Switch>
                 <Route path="/" exact component={HomePage} />
-                <Route path="/login" exact component={LoginPage} />
-                <Route path="/register" exact component={RegsiterPage} />
+                <Route path="/auth/login" exact component={LoginPage} />
+                <Route path="/auth/register" exact component={RegsiterPage} />
                 <Route path="/search/:term" exact component={SearchPage} />
                 <Route path="/search" exact component={SearchPage} />
                 <Route path="/book/category/:categoryId" exact component={CategoryPage} />

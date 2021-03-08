@@ -47,7 +47,6 @@ const SearchPage = (props) => {
     const [Loading, setLoading] = useState(true);
 
     useEffect(() => {
-        setSearchTerm(term);
         const searchBook = async () => {
             try {
                 const {
@@ -59,6 +58,7 @@ const SearchPage = (props) => {
                         SearchTerm: SearchTerm,
                     },
                 });
+                setSearchTerm(SearchTerm);
                 setSearchBookResult(books);
             } catch (error) {
                 setError("책을 찾을 수 없습니다.");
@@ -67,7 +67,7 @@ const SearchPage = (props) => {
             }
         };
         searchBook();
-    }, []);
+    }, [SearchTerm]);
 
     return (
         <>
