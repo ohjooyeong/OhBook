@@ -1,8 +1,11 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { AuthContent, AuthButton, RightAlignedLink } from "../../components/Auth";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import oc from "open-color";
+import axios from "axios";
+import { withRouter } from "react-router-dom";
+import { USER_API_URL } from "../../config";
 
 const Wrapper = styled.div`
     & + & {
@@ -40,12 +43,29 @@ const CautionP = styled.p`
     }
 `;
 
-const RegisterPage = () => {
+const RegisterPage = (props) => {
     const { register, watch, errors, handleSubmit } = useForm();
+    const [Error, setError] = useState(null);
+    const [Loading, setLoading] = useState(true);
     const password = useRef();
     password.current = watch("password");
-    const onSubmit = (data) => {
-        // console.log("data", data);
+
+    const onSubmit = async (data) => {
+        let userInfo = {
+            email: data.email,
+            name: data.name,
+            password: data.password,
+        };
+        try {
+            const response = await axios.post(`${USER_API_URL}/register`, userInfo);
+            if (response.data.success) {
+                props.history.push("/auth/login");
+            } else {
+                throw "error";
+            }
+        } catch (error) {
+            setError("회원가입에 실패하셨습니다");
+        }
     };
 
     return (
@@ -121,4 +141,4 @@ const RegisterPage = () => {
     );
 };
 
-export default RegisterPage;
+export default withRouter(RegisterPage);

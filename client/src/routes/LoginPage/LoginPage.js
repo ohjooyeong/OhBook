@@ -1,8 +1,11 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { AuthContent, AuthButton, RightAlignedLink } from "../../components/Auth";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import oc from "open-color";
+import axios from "axios";
+import { withRouter } from "react-router-dom";
+import { USER_API_URL } from "../../config";
 
 const Wrapper = styled.div`
     & + & {
@@ -40,10 +43,18 @@ const CautionP = styled.p`
     }
 `;
 
-function LoginPage() {
+function LoginPage(props) {
     const { register, watch, errors, handleSubmit } = useForm();
-    const onSubmit = (data) => {
-        // console.log("data", data);
+    const [Error, setError] = useState(null);
+    const onSubmit = async (data) => {
+        try {
+            const response = await axios.post(`${USER_API_URL}/login`, data);
+            if (response.data.loginSuccess) {
+                props.history.push("/");
+            }
+        } catch {
+            setError("가입된 아이디가 아니거나, 비밀번호가 틀렸습니다.");
+        }
     };
 
     return (
@@ -51,7 +62,11 @@ function LoginPage() {
             <AuthContent title="로그인">
                 <Wrapper>
                     <Label>이메일</Label>
-                    <Input name="email" placeholder="이메일" />
+                    <Input
+                        name="email"
+                        placeholder="이메일"
+                        ref={register({ required: true, pattern: /^\S+@\S+$/i })}
+                    />
                     {errors.email && errors.email.type === "required" && (
                         <CautionP>이메일을 입력해주세요.</CautionP>
                     )}
@@ -78,4 +93,4 @@ function LoginPage() {
     );
 }
 
-export default LoginPage;
+export default withRouter(LoginPage);

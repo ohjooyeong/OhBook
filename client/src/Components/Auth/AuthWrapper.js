@@ -4,9 +4,13 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const Positioner = styled.div`
-    position: absolute;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     top: 50%;
     left: 50%;
+    margin-top: 400px;
     transform: translate(-50%, -50%);
     color: black;
 `;
