@@ -1,9 +1,10 @@
 import axios from "axios";
 import { API_KEY } from "./src/config";
 
-// const api = axios.create({
-//     baseURL: "/api/data",
-// });
+axios.create({
+    baseURL: "/api/data",
+    withCredentials: true,
+});
 
 // export const bookApi = {
 //     bestSeller: () => api.get("bestSeller.api"),

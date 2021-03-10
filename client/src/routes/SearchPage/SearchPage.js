@@ -5,6 +5,7 @@ import { BOOK_API_URL } from "../../config";
 import BookLanding from "../../components/BookLanding";
 import LoadingPage from "../../components/LoadingPage";
 import { Helmet } from "react-helmet";
+import { withRouter } from "react-router-dom";
 
 const Container = styled.div`
     padding: 20px;
@@ -101,4 +102,4 @@ const SearchPage = (props) => {
     );
 };
 
-export default SearchPage;
+export default withRouter(SearchPage);

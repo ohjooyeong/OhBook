@@ -3,6 +3,9 @@ import { Link, withRouter } from "react-router-dom";
 import styled from "styled-components";
 import logoImage from "../assets/logo.JPG";
 import SearchForm from "./SearchForm";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { USER_API_URL } from "../config";
 
 const SHeader = styled.header`
     color: black;
@@ -128,7 +131,17 @@ MyLogo.defaultProps = {
     src: logoImage,
 };
 
-function Header({ history }) {
+function Header({ history }, props) {
+    const user = useSelector((state) => state.user);
+    const logoutHandler = () => {
+        axios.get(`${USER_API_URL}/logout`, { withCredentials: true }).then((response) => {
+            if (response.status === 200) {
+                window.location.reload();
+            } else {
+                alert("로그아웃 하는데 실패하셨습니다");
+            }
+        });
+    };
     return (
         <SHeader>
             <Wrraper>
@@ -151,14 +164,24 @@ function Header({ history }) {
                 <List style={{ justifySelf: "center" }}>
                     <SearchForm history={history} />
                 </List>
-                <List style={{ justifySelf: "end" }}>
-                    <Item>
-                        <SLink to="/auth/login">로그인</SLink>
-                    </Item>
-                    <Item>
-                        <SLink to="/auth/register">회원가입</SLink>
-                    </Item>
-                </List>
+                {user.userData && !user.userData.isAuth ? (
+                    <List style={{ justifySelf: "end" }}>
+                        <Item>
+                            <SLink to="/auth/login">로그인</SLink>
+                        </Item>
+                        <Item>
+                            <SLink to="/auth/register">회원가입</SLink>
+                        </Item>
+                    </List>
+                ) : (
+                    <List style={{ justifySelf: "end" }}>
+                        <Item>
+                            <SLink onClick={logoutHandler} to="#">
+                                로그아웃
+                            </SLink>
+                        </Item>
+                    </List>
+                )}
             </Wrraper>
         </SHeader>
     );

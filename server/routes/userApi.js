@@ -29,12 +29,12 @@ userApiRouter.post("/register", (req, res) => {
 
 userApiRouter.post("/login", (req, res) => {
     User.findOne({ email: req.body.email }, (err, user) => {
-        if (!user) {
+        if (!user)
             return res.json({
                 loginSuccess: false,
-                message: "로그인에 실패하셨습니다.",
+                message: "로그인에 실패했습니다",
             });
-        }
+
         user.comparePassword(req.body.password, (err, isMatch) => {
             if (!isMatch)
                 return res.json({ loginSuccess: false, message: "잘못된 비밀번호입니다" });
@@ -47,6 +47,15 @@ userApiRouter.post("/login", (req, res) => {
                     userId: user._id,
                 });
             });
+        });
+    });
+});
+
+userApiRouter.get("/logout", auth, (req, res) => {
+    User.findOneAndUpdate({ _id: req.user._id }, { token: "", tokenExp: "" }, (err, doc) => {
+        if (err) return res.json({ success: false, err });
+        return res.status(200).send({
+            success: true,
         });
     });
 });

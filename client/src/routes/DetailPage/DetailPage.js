@@ -3,6 +3,7 @@ import axios from "axios";
 import styled from "styled-components";
 import { BOOK_API_URL } from "../../config";
 import LoadingPage from "../../components/LoadingPage";
+import { withRouter } from "react-router-dom";
 
 const Container = styled.div`
     height: calc(100vh - 50px);
@@ -120,4 +121,4 @@ function DetailPage(props) {
     );
 }
 
-export default DetailPage;
+export default withRouter(DetailPage);

@@ -37,7 +37,6 @@ const userSchema = mongoose.Schema({
     tokenExp: {
         type: Number,
     },
-    createdAt: { type: Date, default: Date.now },
 });
 
 userSchema.pre("save", function (next) {
@@ -70,12 +69,12 @@ userSchema.methods.comparePassword = function (plainPassword, cb) {
 // 토큰 생성 메서드 만들기
 userSchema.methods.generateToken = function (cb) {
     var user = this;
+
     var token = jwt.sign(user._id.toHexString(), process.env.SECRET_KEY);
     var oneHour = moment().add(1, "hour").valueOf();
 
     user.tokenExp = oneHour;
     user.token = token;
-    console.log(user);
     user.save(function (err, user) {
         if (err) return cb(err);
         cb(null, user);
@@ -88,13 +87,11 @@ userSchema.methods.generateToken = function (cb) {
 userSchema.statics.findByToken = function (token, cb) {
     var user = this;
 
-    jwt.verify(token, process.env.SECRET_KEY, async (err, decode) => {
-        try {
-            const result = await user.findOne({ _id: decode, token: token });
-            cb(null, result);
-        } catch (error) {
-            cb(error);
-        }
+    jwt.verify(token, process.env.SECRET_KEY, function (err, decode) {
+        user.findOne({ _id: decode, token: token }, function (err, user) {
+            if (err) return cb(err);
+            cb(null, user);
+        });
     });
 };
 
