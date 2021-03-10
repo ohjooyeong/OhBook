@@ -3,9 +3,9 @@ import { AuthContent, AuthButton, RightAlignedLink } from "../../components/Auth
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import oc from "open-color";
-import axios from "axios";
 import { withRouter } from "react-router-dom";
-import { USER_API_URL } from "../../config";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../../_actions/user_action";
 
 const Wrapper = styled.div`
     & + & {
@@ -44,9 +44,9 @@ const CautionP = styled.p`
 `;
 
 const RegisterPage = (props) => {
+    const dispatch = useDispatch();
     const { register, watch, errors, handleSubmit } = useForm();
     const [Error, setError] = useState(null);
-    const [Loading, setLoading] = useState(true);
     const password = useRef();
     password.current = watch("password");
 
@@ -57,8 +57,8 @@ const RegisterPage = (props) => {
             password: data.password,
         };
         try {
-            const response = await axios.post(`${USER_API_URL}/register`, userInfo);
-            if (response.data.success) {
+            const response = await dispatch(registerUser(userInfo));
+            if (response.payload.success) {
                 props.history.push("/auth/login");
             } else {
                 throw "error";

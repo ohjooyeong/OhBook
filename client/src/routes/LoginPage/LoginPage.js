@@ -3,9 +3,9 @@ import { AuthContent, AuthButton, RightAlignedLink } from "../../components/Auth
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import oc from "open-color";
-import axios from "axios";
 import { withRouter } from "react-router-dom";
-import { USER_API_URL } from "../../config";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../_actions/user_action";
 
 const Wrapper = styled.div`
     & + & {
@@ -44,13 +44,16 @@ const CautionP = styled.p`
 `;
 
 function LoginPage(props) {
+    const dispatch = useDispatch();
     const { register, watch, errors, handleSubmit } = useForm();
     const [Error, setError] = useState(null);
     const onSubmit = async (data) => {
         try {
-            const response = await axios.post(`${USER_API_URL}/login`, data);
-            if (response.data.loginSuccess) {
+            const response = await dispatch(loginUser(data));
+            if (response.payload.loginSuccess) {
                 props.history.push("/");
+            } else {
+                throw "error";
             }
         } catch {
             setError("가입된 아이디가 아니거나, 비밀번호가 틀렸습니다.");
@@ -82,9 +85,10 @@ function LoginPage(props) {
                         type="password"
                         ref={register({ required: true })}
                     />
-                    {errors.password && errors.password.type === "required" && (
+                    {!Error && errors.password && errors.password.type === "required" && (
                         <CautionP>비밀번호를 입력해주세요.</CautionP>
                     )}
+                    {Error && <CautionP>{Error}</CautionP>}
                 </Wrapper>
                 <AuthButton>로그인</AuthButton>
                 <RightAlignedLink to="/auth/register">아직 회원이 아니신가요?</RightAlignedLink>
