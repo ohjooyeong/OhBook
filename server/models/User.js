@@ -8,36 +8,39 @@ import moment from "moment";
 
 const saltRounds = 10;
 
-const userSchema = mongoose.Schema({
-    name: {
-        type: String,
-        maxlength: 50,
+const userSchema = mongoose.Schema(
+    {
+        name: {
+            type: String,
+            maxlength: 50,
+        },
+        email: {
+            type: String,
+            trim: true,
+            unique: 1,
+        },
+        password: {
+            type: String,
+            minlength: 6,
+        },
+        lastname: {
+            type: String,
+            maxlength: 50,
+        },
+        role: {
+            type: Number,
+            default: 0,
+        },
+        image: String,
+        token: {
+            type: String,
+        },
+        tokenExp: {
+            type: Number,
+        },
     },
-    email: {
-        type: String,
-        trim: true,
-        unique: 1,
-    },
-    password: {
-        type: String,
-        minlength: 6,
-    },
-    lastname: {
-        type: String,
-        maxlength: 50,
-    },
-    role: {
-        type: Number,
-        default: 0,
-    },
-    image: String,
-    token: {
-        type: String,
-    },
-    tokenExp: {
-        type: Number,
-    },
-});
+    { timestamps: true }
+);
 
 userSchema.pre("save", function (next) {
     let user = this;

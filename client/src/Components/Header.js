@@ -35,6 +35,7 @@ const Wrraper = styled.div`
 const List = styled.ul`
     display: flex;
     font-weight: 700;
+    align-items: center;
 `;
 
 const Item = styled.li`
@@ -136,6 +137,7 @@ function Header({ history }, props) {
     const logoutHandler = () => {
         axios.get(`${USER_API_URL}/logout`, { withCredentials: true }).then((response) => {
             if (response.status === 200) {
+                localStorage.removeItem("userId");
                 window.location.reload();
             } else {
                 alert("로그아웃 하는데 실패하셨습니다");
@@ -175,6 +177,9 @@ function Header({ history }, props) {
                     </List>
                 ) : (
                     <List style={{ justifySelf: "end" }}>
+                        <Item>
+                            <SLink to="/favorite">즐겨찾기</SLink>
+                        </Item>
                         <Item>
                             <SLink onClick={logoutHandler} to="#">
                                 로그아웃

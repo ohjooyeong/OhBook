@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { BOOK_API_URL } from "../../config";
 import LoadingPage from "../../components/LoadingPage";
 import { withRouter } from "react-router-dom";
+import Favorite from "./Sections/Favorite";
 
 const Container = styled.div`
     height: calc(100vh - 50px);
@@ -37,6 +38,11 @@ const Data = styled.div`
 const Title = styled.h3`
     font-size: 26px;
     font-weight: 700;
+`;
+
+const TitleContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
 `;
 
 const ItemContainer = styled.div`
@@ -85,7 +91,7 @@ function DetailPage(props) {
             }
         };
         getResult();
-    }, [Result]);
+    }, [setResult]);
 
     return (
         <>
@@ -97,7 +103,14 @@ function DetailPage(props) {
                         <Content>
                             <Cover bgImage={Result.coverLargeUrl} />
                             <Data>
-                                <Title>{Result.title}</Title>
+                                <TitleContainer>
+                                    <Title>{Result.title}</Title>
+                                    <Favorite
+                                        bookInfo={Result}
+                                        bookId={content.id}
+                                        userFrom={localStorage.getItem("userId")}
+                                    />
+                                </TitleContainer>
                                 <ItemContainer>
                                     <Item>
                                         재인 : {Result.pubDate.substring(0, 4)} /{" "}

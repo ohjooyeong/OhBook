@@ -6,6 +6,7 @@ import RegsiterPage from "../routes/RegisterPage/RegisterPage";
 import DetailPage from "../routes/DetailPage/DetailPage";
 import SearchPage from "../routes/SearchPage/SearchPage";
 import CategoryPage from "../routes/CategoryPage/CategoryPage";
+import FavoritePage from "../routes/FavoritePage/FavoritePage";
 import Auth from "../hoc/auth";
 
 import Header from "./Header";
@@ -26,6 +27,7 @@ export default () => (
                     component={Auth(CategoryPage, null)}
                 />
                 <Route path="/book/:bookId" exact component={Auth(DetailPage, null)} />
+                <Route path="/favorite" exact component={Auth(FavoritePage, true)} />
                 <Redirect from="*" to="/" />
             </Switch>
         </>

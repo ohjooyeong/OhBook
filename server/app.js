@@ -10,6 +10,7 @@ import mongoose from "mongoose";
 
 import bookApiRouter from "./routes/bookApi";
 import userApiRouter from "./routes/userApi";
+import favoriteApiRouter from "./routes/favoriteApi";
 
 import config from "./config/key";
 
@@ -38,5 +39,6 @@ app.use(morgan("dev"));
 
 app.use("/api/books", bookApiRouter);
 app.use("/api/users", userApiRouter);
+app.use("/api/favorite", favoriteApiRouter);
 
 export default app;

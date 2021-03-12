@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { BOOK_API_URL } from "../../config";
 import BookLanding from "../../components/BookLanding";
-import { Helmet } from "react-helmet";
 import LoadingPage from "../../components/LoadingPage";
+import { BOOK_API_URL } from "../../config";
+import { Helmet } from "react-helmet";
 import { withRouter } from "react-router-dom";
 
 const Container = styled.div`

@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { auth } from "../_actions/user_action";
@@ -23,7 +22,7 @@ export default function (SpecificComponent, option, adminRoute = null) {
                         // admin 유저가 아닐 때
                         props.history.push("/");
                     } else {
-                        if (!option) {
+                        if (option === false) {
                             props.history.push("/");
                         }
                     }

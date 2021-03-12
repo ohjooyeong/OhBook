@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { AuthContent, AuthButton, RightAlignedLink } from "../../components/Auth";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
@@ -45,12 +45,13 @@ const CautionP = styled.p`
 
 function LoginPage(props) {
     const dispatch = useDispatch();
-    const { register, watch, errors, handleSubmit } = useForm();
+    const { register, errors, handleSubmit } = useForm();
     const [Error, setError] = useState(null);
     const onSubmit = async (data) => {
         try {
             const response = await dispatch(loginUser(data));
             if (response.payload.loginSuccess) {
+                window.localStorage.setItem("userId", response.payload.userId);
                 props.history.push("/");
             } else {
                 throw "error";
