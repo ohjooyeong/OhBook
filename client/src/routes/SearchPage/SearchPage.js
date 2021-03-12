@@ -6,6 +6,7 @@ import BookLanding from "../../components/BookLanding";
 import LoadingPage from "../../components/LoadingPage";
 import { Helmet } from "react-helmet";
 import { withRouter } from "react-router-dom";
+import { useAlert } from "react-alert";
 
 const Container = styled.div`
     padding: 20px;
@@ -44,8 +45,8 @@ const SearchPage = (props) => {
     } = props;
     const [SearchBookResult, setSearchBookResult] = useState([]);
     const [SearchTerm, setSearchTerm] = useState(term);
-    const [Error, setError] = useState(null);
     const [Loading, setLoading] = useState(true);
+    const alert = useAlert();
 
     useEffect(() => {
         const searchBook = async () => {
@@ -62,7 +63,7 @@ const SearchPage = (props) => {
                 setSearchTerm(SearchTerm);
                 setSearchBookResult(books);
             } catch (error) {
-                setError("책을 찾을 수 없습니다.");
+                alert.Error("책을 찾을 수 없습니다.");
             } finally {
                 setLoading(false);
             }

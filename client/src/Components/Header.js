@@ -6,6 +6,7 @@ import SearchForm from "./SearchForm";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { USER_API_URL } from "../config";
+import { useAlert } from "react-alert";
 
 const SHeader = styled.header`
     color: black;
@@ -132,15 +133,17 @@ MyLogo.defaultProps = {
     src: logoImage,
 };
 
-function Header({ history }, props) {
+function Header({ history }) {
     const user = useSelector((state) => state.user);
+    const alert = useAlert();
+
     const logoutHandler = () => {
         axios.get(`${USER_API_URL}/logout`, { withCredentials: true }).then((response) => {
             if (response.status === 200) {
                 localStorage.removeItem("userId");
                 window.location.reload();
             } else {
-                alert("로그아웃 하는데 실패하셨습니다");
+                alert.error("로그아웃 하는데 실패하셨습니다");
             }
         });
     };

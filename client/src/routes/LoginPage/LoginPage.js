@@ -6,6 +6,7 @@ import oc from "open-color";
 import { withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../_actions/user_action";
+import { useAlert } from "react-alert";
 
 const Wrapper = styled.div`
     & + & {
@@ -47,6 +48,8 @@ function LoginPage(props) {
     const dispatch = useDispatch();
     const { register, errors, handleSubmit } = useForm();
     const [Error, setError] = useState(null);
+    const alert = useAlert();
+
     const onSubmit = async (data) => {
         try {
             const response = await dispatch(loginUser(data));
@@ -54,7 +57,7 @@ function LoginPage(props) {
                 window.localStorage.setItem("userId", response.payload.userId);
                 props.history.push("/");
             } else {
-                throw "error";
+                throw Error();
             }
         } catch {
             setError("가입된 아이디가 아니거나, 비밀번호가 틀렸습니다.");

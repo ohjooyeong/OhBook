@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { AuthContent, AuthButton, RightAlignedLink } from "../../components/Auth";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
@@ -6,6 +6,7 @@ import oc from "open-color";
 import { withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../../_actions/user_action";
+import { useAlert } from "react-alert";
 
 const Wrapper = styled.div`
     & + & {
@@ -46,9 +47,9 @@ const CautionP = styled.p`
 const RegisterPage = (props) => {
     const dispatch = useDispatch();
     const { register, watch, errors, handleSubmit } = useForm();
-    const [Error, setError] = useState(null);
     const password = useRef();
     password.current = watch("password");
+    const alert = useAlert();
 
     const onSubmit = async (data) => {
         let userInfo = {
@@ -61,10 +62,10 @@ const RegisterPage = (props) => {
             if (response.payload.success) {
                 props.history.push("/auth/login");
             } else {
-                throw "error";
+                throw Error();
             }
         } catch (error) {
-            setError("회원가입에 실패하셨습니다");
+            alert.error("회원가입에 실패하셨습니다");
         }
     };
 

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { FAVORITE_API_URL } from "../../config";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
+import { useAlert } from "react-alert";
 
 const Container = styled.div`
     width: 80%;
@@ -82,6 +83,7 @@ const Image = styled.img`
 
 function FavoritePage() {
     const [FavoriteList, setFavoriteList] = useState([]);
+    const alert = useAlert();
 
     useEffect(() => {
         axios
@@ -92,7 +94,7 @@ function FavoritePage() {
                 if (response.data.success) {
                     setFavoriteList(response.data.favoriteList);
                 } else {
-                    alert("정보를 가져오는 데 실패했습니다.");
+                    alert.error("정보를 가져오는 데 실패했습니다.");
                 }
             });
     }, [FavoriteList]);
@@ -105,7 +107,7 @@ function FavoritePage() {
         axios.post(`${FAVORITE_API_URL}/removeFromFavorite`, value).then((response) => {
             if (response.data.success) {
             } else {
-                alert("리스트에서 지우는 데 실패했습니다.");
+                alert.error("리스트에서 지우는 데 실패했습니다.");
             }
         });
     };

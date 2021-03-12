@@ -6,6 +6,7 @@ import LoadingPage from "../../components/LoadingPage";
 import { BOOK_API_URL } from "../../config";
 import { Helmet } from "react-helmet";
 import { withRouter } from "react-router-dom";
+import { useAlert } from "react-alert";
 
 const Container = styled.div`
     padding: 20px;
@@ -38,8 +39,8 @@ const Title = styled.div`
 
 const CategoryPage = (props) => {
     const [CategoryBook, setCategoryBook] = useState([]);
-    const [Error, setError] = useState(null);
     const [Loading, setLoading] = useState(true);
+    const alert = useAlert();
 
     const category = {
         categoryId: props.match.params.categoryId,
@@ -54,7 +55,7 @@ const CategoryPage = (props) => {
                 } = await axios.post(`${BOOK_API_URL}/category`, category);
                 setCategoryBook(books);
             } catch (error) {
-                setError("책을 찾을 수 없습니다.");
+                alert.error("책을 찾을 수 없습니다.");
             } finally {
                 setLoading(false);
             }

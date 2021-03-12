@@ -7,6 +7,7 @@ import { BOOK_API_URL } from "../../config";
 import SwiperSection from "../../components/SwiperSection";
 import { SwiperSlide } from "swiper/react";
 import CoverImage from "../../components/CoverImage";
+import { useAlert } from "react-alert";
 
 const Container = styled.div`
     padding: 20px;
@@ -16,8 +17,9 @@ function HomePage() {
     const [BestSellers, setBestSellers] = useState([]);
     const [Recommends, setRecommends] = useState([]);
     const [NewBooks, setNewBooks] = useState([]);
-    const [Error, setError] = useState(null);
+
     const [Loading, setLoading] = useState(true);
+    const alert = useAlert();
 
     useEffect(() => {
         const allBook = async () => {
@@ -43,7 +45,7 @@ function HomePage() {
                 setRecommends(recommend);
                 setNewBooks(newBook);
             } catch (error) {
-                setError("책을 찾을 수 없습니다.");
+                alert.error("책을 찾을 수 없습니다.");
             } finally {
                 setLoading(false);
             }

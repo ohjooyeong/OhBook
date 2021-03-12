@@ -5,6 +5,7 @@ import { BOOK_API_URL } from "../../config";
 import LoadingPage from "../../components/LoadingPage";
 import { withRouter } from "react-router-dom";
 import Favorite from "./Sections/Favorite";
+import { useAlert } from "react-alert";
 
 const Container = styled.div`
     height: calc(100vh - 50px);
@@ -68,8 +69,8 @@ const Overview = styled.p`
 
 function DetailPage(props) {
     const [Result, setResult] = useState(null);
-    const [Error, setError] = useState(null);
     const [Loading, setLoading] = useState(true);
+    const alert = useAlert();
 
     const content = {
         id: props.match.params.bookId,
@@ -85,7 +86,7 @@ function DetailPage(props) {
                 } = await axios.post(`${BOOK_API_URL}/detail`, content);
                 setResult(...book);
             } catch {
-                setError("책을 찾을 수 없습니다.");
+                alert.error("책을 찾을 수 없습니다.");
             } finally {
                 setLoading(false);
             }

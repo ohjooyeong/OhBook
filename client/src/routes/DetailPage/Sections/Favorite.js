@@ -4,6 +4,7 @@ import { FaStar, FaRegStar } from "react-icons/fa";
 import axios from "axios";
 import { FAVORITE_API_URL } from "../../../config";
 import { useSelector } from "react-redux";
+import { useAlert } from "react-alert";
 
 const FavoriteButton = styled.div`
     width: 4rem;
@@ -32,6 +33,7 @@ function Favorite(props) {
     const [Favorited, setFavorited] = useState(false);
 
     const user = useSelector((state) => state.user);
+    const alert = useAlert();
 
     let bookInfo = {
         userFrom,
@@ -46,14 +48,14 @@ function Favorite(props) {
             if (response.data.success) {
                 setFavoriteNumber(response.data.favoriteNumber);
             } else {
-                alert("숫자 정보를 가져오는 데 실패했습니다");
+                alert.error("숫자 정보를 가져오는 데 실패했습니다");
             }
         });
         axios.post(`${FAVORITE_API_URL}/favorited`, bookInfo).then((response) => {
             if (response.data.success) {
                 setFavorited(response.data.favorited);
             } else {
-                alert("정보를 가져오는 데 실패했습니다");
+                alert.error("정보를 가져오는 데 실패했습니다");
             }
         });
     }, []);
@@ -66,7 +68,7 @@ function Favorite(props) {
                         setFavoriteNumber(FavoriteNumber - 1);
                         setFavorited(!Favorited);
                     } else {
-                        alert("즐겨찾기 리스트에서 지우는 걸 실패했습니다");
+                        alert.error("즐겨찾기 리스트에서 지우는 걸 실패했습니다");
                     }
                 });
             } else {
@@ -75,10 +77,12 @@ function Favorite(props) {
                         setFavoriteNumber(FavoriteNumber + 1);
                         setFavorited(!Favorited);
                     } else {
-                        alert("즐겨찾기 리스트에 추가하는 걸 실패했습니다");
+                        alert.error("즐겨찾기 리스트에 추가하는 걸 실패했습니다");
                     }
                 });
             }
+        } else {
+            alert.info("로그인 후 가능합니다");
         }
     };
 
