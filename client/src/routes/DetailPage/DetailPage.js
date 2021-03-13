@@ -105,7 +105,7 @@ function DetailPage(props) {
             })
             .catch((err) => alert.error("댓글을 불러오는 데 실패했습니다"));
         getResult();
-    }, [setResult, CommentLists, alert, bookId]);
+    }, [setResult, alert, bookId]);
 
     const onClickHandler = (id) => {
         setactiveId(id);
