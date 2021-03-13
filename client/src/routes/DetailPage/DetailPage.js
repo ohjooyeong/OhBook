@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { BOOK_API_URL, COMMENT_API_URL } from "../../config";
@@ -49,6 +49,8 @@ const TitleContainer = styled.div`
 
 const ItemContainer = styled.div`
     margin: 20px 0;
+    line-height: 1.6;
+    letter-spacing: -0.3px;
 `;
 
 const Item = styled.span`
@@ -68,6 +70,13 @@ const Overview = styled.p`
     width: 100%;
 `;
 
+const ILink = styled.a`
+    opacity: 0.9;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fabb46;
+`;
+
 function DetailPage(props) {
     const [Result, setResult] = useState(null);
     const [Loading, setLoading] = useState(true);
@@ -79,33 +88,33 @@ function DetailPage(props) {
             params: { bookId },
         },
     } = props;
+    const getResult = useCallback(async () => {
+        try {
+            const {
+                data: {
+                    response: { item: book },
+                },
+            } = await axios.post(`${BOOK_API_URL}/detail`, { id: bookId });
+            axios
+                .post(`${COMMENT_API_URL}/getComments`, { id: bookId })
+                .then((response) => {
+                    if (response.data.success) {
+                        setCommentLists(response.data.comments);
+                    } else {
+                        alert.error("댓글을 불러오는 데 실패했습니다");
+                    }
+                })
+                .catch((err) => alert.error("댓글을 불러오는 데 실패했습니다"));
+            setResult(...book);
+        } catch {
+            alert.error("책을 찾을 수 없습니다.");
+        } finally {
+            setLoading(false);
+        }
+    }, [bookId, alert]);
     useEffect(() => {
-        const getResult = async () => {
-            try {
-                const {
-                    data: {
-                        response: { item: book },
-                    },
-                } = await axios.post(`${BOOK_API_URL}/detail`, { id: bookId });
-                setResult(...book);
-            } catch {
-                alert.error("책을 찾을 수 없습니다.");
-            } finally {
-                setLoading(false);
-            }
-        };
-        axios
-            .post(`${COMMENT_API_URL}/getComments`, { id: bookId })
-            .then((response) => {
-                if (response.data.success) {
-                    setCommentLists(response.data.comments);
-                } else {
-                    alert.error("댓글을 불러오는 데 실패했습니다");
-                }
-            })
-            .catch((err) => alert.error("댓글을 불러오는 데 실패했습니다"));
         getResult();
-    }, [setResult, alert, bookId]);
+    }, [getResult]);
 
     const onClickHandler = (id) => {
         setactiveId(id);
@@ -145,6 +154,9 @@ function DetailPage(props) {
                                     <Divider> </Divider>
                                     <Item>출판사 : {Result.publisher}</Item>
                                     <Divider> </Divider>
+                                    <ILink href={Result.link} target="_blank">
+                                        도서 링크
+                                    </ILink>
                                 </ItemContainer>
                                 <Overview>{Result.description}</Overview>
                                 <Tabs
