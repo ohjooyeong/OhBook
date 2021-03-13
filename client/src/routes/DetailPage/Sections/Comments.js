@@ -133,7 +133,13 @@ function Comments(props) {
                         <SingleComment>
                             <CommentTop>
                                 <CommentName>{comment.writer.name}</CommentName>
-                                <DeleteButton onClick={() => onRemove(comment._id)}>X</DeleteButton>
+                                {user.userData._id === comment.writer._id ? (
+                                    <DeleteButton onClick={() => onRemove(comment._id)}>
+                                        X
+                                    </DeleteButton>
+                                ) : (
+                                    <div></div>
+                                )}
                             </CommentTop>
                             <CommentText>{comment.content}</CommentText>
                             <CommentDate>{comment.createdAt.substring(0, 10)}</CommentDate>
