@@ -32,7 +32,7 @@ function Auth(SpecificComponent, option, adminRoute = null) {
                     }
                 }
             });
-        }, []);
+        });
         return <SpecificComponent />;
     }
 

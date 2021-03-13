@@ -97,7 +97,7 @@ function FavoritePage() {
                     alert.error("정보를 가져오는 데 실패했습니다.");
                 }
             });
-    }, [FavoriteList]);
+    }, [FavoriteList, alert]);
 
     const onClickDelete = (bookId, userFrom) => {
         const value = {
@@ -106,6 +106,7 @@ function FavoritePage() {
         };
         axios.post(`${FAVORITE_API_URL}/removeFromFavorite`, value).then((response) => {
             if (response.data.success) {
+                alert.info("삭제되었습니다");
             } else {
                 alert.error("리스트에서 지우는 데 실패했습니다.");
             }

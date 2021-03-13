@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+
 import reset from "styled-reset";
 
 const GlobalStyles = createGlobalStyle`
@@ -11,7 +12,7 @@ const GlobalStyles = createGlobalStyle`
 		box-sizing: border-box;
 	}
 	body {
-		font-family: 'NotoSans Light','Malgun Gothic','맑은 고딕','Apple SD Gothic Neo','돋움',dotum, sans-serif;
+		font-family: 'Noto Sans KR', sans-serif;
 		font-size: 14px;
 		color: black;
 		padding-top: 60px;

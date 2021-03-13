@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { BOOK_API_URL } from "../../config";
@@ -48,28 +48,29 @@ const SearchPage = (props) => {
     const [Loading, setLoading] = useState(true);
     const alert = useAlert();
 
+    const searchBook = useCallback(async () => {
+        try {
+            const {
+                data: {
+                    response: { item: books },
+                },
+            } = await axios.post(`${BOOK_API_URL}/search`, {
+                params: {
+                    SearchTerm: SearchTerm,
+                },
+            });
+            setSearchTerm(SearchTerm);
+            setSearchBookResult(books);
+        } catch (error) {
+            alert.Error("책을 찾을 수 없습니다.");
+        } finally {
+            setLoading(false);
+        }
+    }, [SearchTerm, alert]);
+
     useEffect(() => {
-        const searchBook = async () => {
-            try {
-                const {
-                    data: {
-                        response: { item: books },
-                    },
-                } = await axios.post(`${BOOK_API_URL}/search`, {
-                    params: {
-                        SearchTerm: SearchTerm,
-                    },
-                });
-                setSearchTerm(SearchTerm);
-                setSearchBookResult(books);
-            } catch (error) {
-                alert.Error("책을 찾을 수 없습니다.");
-            } finally {
-                setLoading(false);
-            }
-        };
         searchBook();
-    }, [SearchTerm]);
+    }, [searchBook]);
 
     return (
         <>

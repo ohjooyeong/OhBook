@@ -51,7 +51,7 @@ function HomePage() {
             }
         };
         allBook();
-    }, []);
+    }, [alert]);
     return (
         <>
             <Helmet>

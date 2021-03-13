@@ -11,7 +11,7 @@ import Auth from "../hoc/auth";
 
 import Header from "./Header";
 
-export default () => (
+const Router = () => (
     <BrowserRouter>
         <>
             <Header />
@@ -33,3 +33,5 @@ export default () => (
         </>
     </BrowserRouter>
 );
+
+export default Router;

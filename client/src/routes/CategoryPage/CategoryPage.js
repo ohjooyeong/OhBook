@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import BookLanding from "../../components/BookLanding";
@@ -42,26 +42,26 @@ const CategoryPage = (props) => {
     const [Loading, setLoading] = useState(true);
     const alert = useAlert();
 
-    const category = {
-        categoryId: props.match.params.categoryId,
-    };
+    const categoryBook = useCallback(async () => {
+        try {
+            const {
+                data: {
+                    response: { item: books },
+                },
+            } = await axios.post(`${BOOK_API_URL}/category`, {
+                categoryId: props.match.params.categoryId,
+            });
+            setCategoryBook(books);
+        } catch (error) {
+            alert.error("책을 찾을 수 없습니다.");
+        } finally {
+            setLoading(false);
+        }
+    }, [alert, props.match.params.categoryId]);
+
     useEffect(() => {
-        const categoryBook = async () => {
-            try {
-                const {
-                    data: {
-                        response: { item: books },
-                    },
-                } = await axios.post(`${BOOK_API_URL}/category`, category);
-                setCategoryBook(books);
-            } catch (error) {
-                alert.error("책을 찾을 수 없습니다.");
-            } finally {
-                setLoading(false);
-            }
-        };
         categoryBook();
-    }, [category.categoryId]);
+    }, [categoryBook]);
 
     return (
         <>

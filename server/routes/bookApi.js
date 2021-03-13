@@ -86,7 +86,7 @@ bookApiRouter.post("/search", async (req, res) => {
 
 bookApiRouter.post("/detail", async (req, res) => {
     const {
-        body: { id: id },
+        body: { id },
     } = req;
     try {
         const response = await axios.get(

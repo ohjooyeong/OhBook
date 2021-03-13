@@ -58,7 +58,7 @@ function Favorite(props) {
                 alert.error("정보를 가져오는 데 실패했습니다");
             }
         });
-    }, []);
+    }, [alert]);
 
     const onClickFavorite = () => {
         if (user.userData.isAuth) {

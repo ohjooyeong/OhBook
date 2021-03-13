@@ -55,6 +55,7 @@ function LoginPage(props) {
             const response = await dispatch(loginUser(data));
             if (response.payload.loginSuccess) {
                 window.localStorage.setItem("userId", response.payload.userId);
+                alert.info("로그인되었습니다.");
                 props.history.push("/");
             } else {
                 throw Error();

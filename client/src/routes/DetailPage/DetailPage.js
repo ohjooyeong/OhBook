@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { BOOK_API_URL } from "../../config";
+import { BOOK_API_URL, COMMENT_API_URL } from "../../config";
 import LoadingPage from "../../components/LoadingPage";
 import { withRouter } from "react-router-dom";
 import Favorite from "./Sections/Favorite";
 import { useAlert } from "react-alert";
+import Tabs from "./Sections/Tabs";
 
 const Container = styled.div`
     height: calc(100vh - 50px);
@@ -70,12 +71,14 @@ const Overview = styled.p`
 function DetailPage(props) {
     const [Result, setResult] = useState(null);
     const [Loading, setLoading] = useState(true);
+    const [activeId, setactiveId] = useState(0);
+    const [CommentLists, setCommentLists] = useState([]);
     const alert = useAlert();
-
-    const content = {
-        id: props.match.params.bookId,
-    };
-
+    const {
+        match: {
+            params: { bookId },
+        },
+    } = props;
     useEffect(() => {
         const getResult = async () => {
             try {
@@ -83,7 +86,8 @@ function DetailPage(props) {
                     data: {
                         response: { item: book },
                     },
-                } = await axios.post(`${BOOK_API_URL}/detail`, content);
+                } = await axios.post(`${BOOK_API_URL}/detail`, { id: bookId });
+                console.log(book);
                 setResult(...book);
             } catch {
                 alert.error("책을 찾을 수 없습니다.");
@@ -91,8 +95,26 @@ function DetailPage(props) {
                 setLoading(false);
             }
         };
+        axios
+            .post(`${COMMENT_API_URL}/getComments`, { id: bookId })
+            .then((response) => {
+                if (response.data.success) {
+                    setCommentLists(response.data.comments);
+                } else {
+                    alert.error("댓글을 불러오는 데 실패했습니다");
+                }
+            })
+            .catch((err) => alert.error("댓글을 불러오는 데 실패했습니다"));
         getResult();
-    }, [setResult]);
+    }, [setResult, CommentLists, alert, bookId]);
+
+    const onClickHandler = (id) => {
+        setactiveId(id);
+    };
+
+    const updateComment = (newComment) => {
+        setCommentLists(CommentLists.concat(newComment));
+    };
 
     return (
         <>
@@ -108,7 +130,7 @@ function DetailPage(props) {
                                     <Title>{Result.title}</Title>
                                     <Favorite
                                         bookInfo={Result}
-                                        bookId={content.id}
+                                        bookId={bookId}
                                         userFrom={localStorage.getItem("userId")}
                                     />
                                 </TitleContainer>
@@ -126,6 +148,13 @@ function DetailPage(props) {
                                     <Divider> </Divider>
                                 </ItemContainer>
                                 <Overview>{Result.description}</Overview>
+                                <Tabs
+                                    activeId={activeId}
+                                    onClickHandler={onClickHandler}
+                                    comments={CommentLists}
+                                    postId={bookId}
+                                    refreshFunction={updateComment}
+                                />
                             </Data>
                         </Content>
                     </Container>
