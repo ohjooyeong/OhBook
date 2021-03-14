@@ -8,7 +8,6 @@
 http://www.ohbook.site/
 
 ## 기술스택
----
 ### 클라이언트
 - React(React-hooks)
 - Redux
