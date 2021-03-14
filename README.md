@@ -26,7 +26,7 @@ http://www.ohbook.site/
 - 도메인연결
 - MongoDB Atals(DB 클라우드)
 
-### 그외 설정
+### 그 외 설정
 - Git
 - axios
 - CRA(클라이언트)
