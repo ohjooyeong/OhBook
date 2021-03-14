@@ -37,7 +37,6 @@ http://www.ohbook.site/
 - 인터파크 도서 API
 
 ## 주요 기술을 활용한 기능들
----
 + 도서 슬라이드, 스와이프 기능
 	+ API를 통한 도서 목록 3가지
 	+ Swiper 모듈을 활용한 도서목록 자동 슬라이드
@@ -69,7 +68,6 @@ http://www.ohbook.site/
     + React-alert 모듈을 활용한 정보 및 오류 알림 기능
 
 ## 스크린샷
----
 <img src="./images/1.JPG" width="180px" height="200px" title="Home" alt="Home"></img>
 <img src="./images/2.JPG" width="180px" height="200px" title="SignUp" alt="SignUp"></img>
 <img src="./images/3.JPG" width="180px" height="200px" title="Login" alt="CommertialMovie"></img>
@@ -80,7 +78,6 @@ http://www.ohbook.site/
 
 
 ## 후기
----
 강의만 보다가 긴가민가한 개념들을 직접 고민하면서 프로젝트에 구현하니까 개념이 많이 이해가 됐다. 그렇다고 완전 다 이해한 건 아니지만 전체적인 흐름이나 코드를 활용 할 수 있다는 자신감이 생겼다.
 몇가지 아쉬운 점은 더 많은 기능과 코드의 완벽함을 가지고 싶었는 데 시간이 모자란 점이 컸다.
 그리고 cors 에러 이건 진짜 마지막 배포까지 날 괴롭혀서 어후..
