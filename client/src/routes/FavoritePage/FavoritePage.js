@@ -1,10 +1,12 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { FAVORITE_API_URL } from "../../config";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import { useAlert } from "react-alert";
+import { Helmet } from "react-helmet";
+import LoadingPage from "../../components/LoadingPage";
 
 const Container = styled.div`
     width: 80%;
@@ -83,10 +85,11 @@ const Image = styled.img`
 
 function FavoritePage() {
     const [FavoriteList, setFavoriteList] = useState([]);
+    const [Loading, setLoading] = useState(true);
     const alert = useAlert();
 
-    useEffect(() => {
-        axios
+    const refreshFavorite = useCallback(async () => {
+        await axios
             .post(`${FAVORITE_API_URL}/getFavoredBook`, {
                 userFrom: localStorage.getItem("userId"),
             })
@@ -97,7 +100,12 @@ function FavoritePage() {
                     alert.error("정보를 가져오는 데 실패했습니다.");
                 }
             });
-    }, [FavoriteList, alert]);
+        setLoading(false);
+    }, [alert]);
+
+    useEffect(() => {
+        refreshFavorite();
+    }, [refreshFavorite]);
 
     const onClickDelete = (bookId, userFrom) => {
         const value = {
@@ -106,6 +114,7 @@ function FavoritePage() {
         };
         axios.post(`${FAVORITE_API_URL}/removeFromFavorite`, value).then((response) => {
             if (response.data.success) {
+                refreshFavorite();
                 alert.info("삭제되었습니다");
             } else {
                 alert.error("리스트에서 지우는 데 실패했습니다.");
@@ -149,19 +158,24 @@ function FavoritePage() {
     });
 
     return (
-        <Container>
-            <Title>즐겨찾기 목록</Title>
-            <Line />
-            <List>
-                <ListItem>제목</ListItem>
+        <>
+            <Helmet>
+                <title>즐겨찾기</title>
+            </Helmet>
+            <Container>
+                <Title>즐겨찾기 목록</Title>
+                <Line />
+                <List>
+                    <ListItem>제목</ListItem>
 
-                <ListItem>저자</ListItem>
+                    <ListItem>저자</ListItem>
 
-                <ListItem>즐삭</ListItem>
-            </List>
-            <Line />
-            {renderCards}
-        </Container>
+                    <ListItem>즐삭</ListItem>
+                </List>
+                <Line />
+                {Loading ? <LoadingPage /> : <div>{renderCards}</div>}
+            </Container>
+        </>
     );
 }
 

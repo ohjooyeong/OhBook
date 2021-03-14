@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useAlert } from "react-alert";
@@ -75,8 +75,26 @@ const DeleteButton = styled.button`
 function Comments(props) {
     const user = useSelector((state) => state.user);
     const [Comment, setComment] = useState("");
+    const [CommentLists, setCommentLists] = useState([]);
 
     const alert = useAlert();
+
+    const refreshComments = useCallback(() => {
+        axios
+            .post(`${COMMENT_API_URL}/getComments`, { id: props.postId })
+            .then((response) => {
+                if (response.data.success) {
+                    setCommentLists(response.data.comments);
+                } else {
+                    alert.error("댓글을 불러오는 데 실패했습니다");
+                }
+            })
+            .catch((err) => alert.error("댓글을 불러오는 데 실패했습니다"));
+    }, [alert, props.postId]);
+
+    useEffect(() => {
+        refreshComments();
+    }, [refreshComments]);
 
     const handleChage = (e) => {
         setComment(e.currentTarget.value);
@@ -105,7 +123,7 @@ function Comments(props) {
             .then((response) => {
                 if (response.data.success) {
                     setComment("");
-                    props.refreshFunction(response.data.result);
+                    updateComment(response.data.result);
                 } else {
                     alert.error("댓글 저장에 실패했습니다");
                 }
@@ -114,11 +132,16 @@ function Comments(props) {
     const onRemove = (id) => {
         axios.post(`${COMMENT_API_URL}/removeComments`, { id: id }).then((response) => {
             if (response.data.success) {
+                refreshComments();
                 alert.info("삭제 완료되었습니다");
             } else {
                 alert.error("댓글 삭제를 실패했습니다");
             }
         });
+    };
+
+    const updateComment = (newComment) => {
+        setCommentLists(CommentLists.concat(newComment));
     };
 
     return (
@@ -127,8 +150,8 @@ function Comments(props) {
                 <Textarea onChange={handleChage} value={Comment} />
                 <Button onClick={onSubmit}>댓글 등록</Button>
             </Form>
-            {props.comments &&
-                props.comments.map((comment, index) => (
+            {CommentLists &&
+                CommentLists.map((comment, index) => (
                     <KeyDiv key={comment._id}>
                         <SingleComment>
                             <CommentTop>
@@ -146,7 +169,7 @@ function Comments(props) {
                         </SingleComment>
                     </KeyDiv>
                 ))}
-            {props.comments && props.comments.length === 0 && (
+            {CommentLists && CommentLists.length === 0 && (
                 <FirstContent>처음으로 책에 대한 정보나, 감상평을 남겨주세요!</FirstContent>
             )}
         </Container>

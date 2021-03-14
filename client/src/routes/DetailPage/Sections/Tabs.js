@@ -38,13 +38,11 @@ const Item = styled.div`
     border: 1px solid gray;
 `;
 
-const Tabs = ({ activeId, onClickHandler, comments, refreshFunction, postId }) => {
+const Tabs = ({ activeId, onClickHandler, postId }) => {
     const tabObj = {
         0: {
             title: `댓글`,
-            comp: (
-                <Comments comments={comments} postId={postId} refreshFunction={refreshFunction} />
-            ),
+            comp: <Comments postId={postId} />,
         },
     };
 
@@ -53,7 +51,6 @@ const Tabs = ({ activeId, onClickHandler, comments, refreshFunction, postId }) =
             <TabList>
                 <Tab onClick={() => onClickHandler(0)} current={activeId === 0}>
                     {tabObj[0].title}
-                    {comments.length > 0 ? ` ${comments.length}` : ""}
                 </Tab>
             </TabList>
             <Item>{tabObj[activeId].comp}</Item>

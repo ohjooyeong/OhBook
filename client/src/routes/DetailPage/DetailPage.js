@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { BOOK_API_URL, COMMENT_API_URL } from "../../config";
+import { BOOK_API_URL } from "../../config";
 import LoadingPage from "../../components/LoadingPage";
 import { withRouter } from "react-router-dom";
 import Favorite from "./Sections/Favorite";
@@ -81,7 +81,7 @@ function DetailPage(props) {
     const [Result, setResult] = useState(null);
     const [Loading, setLoading] = useState(true);
     const [activeId, setactiveId] = useState(0);
-    const [CommentLists, setCommentLists] = useState([]);
+
     const alert = useAlert();
     const {
         match: {
@@ -95,16 +95,7 @@ function DetailPage(props) {
                     response: { item: book },
                 },
             } = await axios.post(`${BOOK_API_URL}/detail`, { id: bookId });
-            axios
-                .post(`${COMMENT_API_URL}/getComments`, { id: bookId })
-                .then((response) => {
-                    if (response.data.success) {
-                        setCommentLists(response.data.comments);
-                    } else {
-                        alert.error("댓글을 불러오는 데 실패했습니다");
-                    }
-                })
-                .catch((err) => alert.error("댓글을 불러오는 데 실패했습니다"));
+
             setResult(...book);
         } catch {
             alert.error("책을 찾을 수 없습니다.");
@@ -118,10 +109,6 @@ function DetailPage(props) {
 
     const onClickHandler = (id) => {
         setactiveId(id);
-    };
-
-    const updateComment = (newComment) => {
-        setCommentLists(CommentLists.concat(newComment));
     };
 
     return (
@@ -162,9 +149,7 @@ function DetailPage(props) {
                                 <Tabs
                                     activeId={activeId}
                                     onClickHandler={onClickHandler}
-                                    comments={CommentLists}
                                     postId={bookId}
-                                    refreshFunction={updateComment}
                                 />
                             </Data>
                         </Content>
