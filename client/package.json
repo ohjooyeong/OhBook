@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^12.1.10",
     "antd": "^4.13.1",
     "axios": "^0.21.1",
+    "immer": "^9.0.5",
     "open-color": "^1.8.0",
     "react": "^17.0.1",
     "react-alert": "^7.0.2",
